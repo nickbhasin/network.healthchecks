@@ -1,1 +1,30 @@
 ancestor: null
+releases:
+  1.0.0:
+    changes:
+      bugfixes:
+        - Adds the changelog fragments.
+        - Fixes the lint and sanity errors.
+        - Moves the templates to the same directory as tasks and other files.
+    fragments:
+      - fix_lint_errors.yaml
+      - fix_templates.yaml
+    plugins:
+      filter:
+        - description: Generate the filtered filesystem health check dict based on the
+            provided target.
+          name: filesystem_health_check_view
+          namespace: null
+        - description: Generate the filtered health check dict based on the provided
+            target.
+          name: health_check_view
+          namespace: null
+        - description: Generate the filtered health check dict based on the provided
+            target.
+          name: interfaces_health_check_view
+          namespace: null
+        - description: Generate the filtered health check dict based on the provided
+            target.
+          name: ospf_health_check_view
+          namespace: null
+    release_date: '2025-07-03'

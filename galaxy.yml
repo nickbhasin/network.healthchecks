@@ -11,7 +11,7 @@ name: healthchecks
 description: Ansible Network Healthchecks collection enable users to perform various network health checks and monitor tasks across different network platforms.
 namespace: network
 readme: README.md
-repository: https://github.com/redhat-cop/network.healthchecks
-issues: https://github.com/redhat-cop/network.healthchecks/issues
+repository: https://github.com/ansible-automation-platform/network.healthchecks
+issues: https://github.com/ansible-automation-platform/network.healthchecks/issues
 tags: [networking]
 version: 1.0.0
