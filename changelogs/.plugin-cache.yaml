@@ -7,9 +7,22 @@ plugins:
   cliconf: {}
   connection: {}
   filter:
+    filesystem_health_check_view:
+      description: Generate the filtered filesystem health check dict based on the
+        provided target.
+      name: filesystem_health_check_view
+      version_added: 1.0.0
     health_check_view:
       description: Generate the filtered health check dict based on the provided target.
       name: health_check_view
+      version_added: 1.0.0
+    interfaces_health_check_view:
+      description: Generate the filtered health check dict based on the provided target.
+      name: interfaces_health_check_view
+      version_added: 1.0.0
+    ospf_health_check_view:
+      description: Generate the filtered health check dict based on the provided target.
+      name: ospf_health_check_view
       version_added: 1.0.0
   httpapi: {}
   inventory: {}
@@ -20,4 +33,4 @@ plugins:
   strategy: {}
   test: {}
   vars: {}
-version: 6.0.0
+version: 1.0.0
