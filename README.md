@@ -72,9 +72,9 @@ The `network.healthchecks.ospf` role monitors OSPF neighbor states and session s
 For detailed documentation, features, and examples, see the [OSPF Health Check README](roles/ospf/README.md).
 
 ## Requirements
-- [Requires Ansible](https://github.com/redhat-cop/network.healthchecks/blob/main/meta/runtime.yml)
-- [Requires Content Collections](https://github.com/redhat-cop/network.healthchecks/blob/main/galaxy.yml)
-- [Testing Requirements](https://github.com/redhat-cop/network.healthchecks/blob/main/test-requirements.txt)
+- [Requires Ansible](https://github.com/ansible-automation-platform/network.healthchecks/blob/main/meta/runtime.yml)
+- [Requires Content Collections](https://github.com/ansible-automation-platform/network.healthchecks/blob/main/galaxy.yml)
+- [Testing Requirements](https://github.com/ansible-automation-platform/network.healthchecks/blob/main/test-requirements.txt)
 - Users need to include platform-specific collections as per their requirements:
   - [arista.eos](https://github.com/ansible-collections/arista.eos)
   - [cisco.ios](https://github.com/ansible-collections/cisco.ios)
@@ -98,36 +98,29 @@ token=<SuperSecretToken>
 Utilize the current Token, and if the token has expired, obtain the necessary
 token from the [Automation Hub Web UI](https://console.redhat.com/ansible/automation-hub/token).
 
-With this configured, simply run the following commands:
-
-```
-ansible-galaxy collection install network.healthchecks
-ansible-galaxy collection install network.bgp
-```
-
 ## Testing
 
 The project uses tox to run `ansible-lint` and `ansible-test sanity`.
-Assuming this repository is checked out in the proper structure,
-e.g. `collections_root/ansible_collections/network/bgp`, run:
+Assuming this repository is checked out in the proper structure, run:
 
 ```shell
   tox -e ansible-lint
   tox -e py39-sanity
 ```
 
-To run integration tests, ensure that your inventory has a `network_bgp` group.
+To run integration tests, ensure that your inventory has a `network_healthchecks` group.
 Depending on what test target you are running, comment out the host(s).
 
 ```shell
 [network_hosts]
-ios
-junos
+cpu
+bgp
+memory
 
-[ios:vars]
+[cpu:vars]
 < enter inventory details for this group >
 
-[junos:vars]
+[bgp:vars]
 < enter inventory details for this group >
 ```
 
@@ -156,7 +149,7 @@ Please read and familiarize yourself with this document.
 
 ## Release notes
 
-Release notes are available [here](https://github.com/redhat-cop/network.bgp/blob/main/CHANGELOG.rst).
+Release notes are available [here](https://github.com/ansible-automation-platform/network.healthchecks/blob/main/CHANGELOG.rst).
 
 ## Related information
 
