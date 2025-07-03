@@ -4,3 +4,4 @@ __pycache__
 *.pyc
 .ansible
 tests/output
+.plugin-cache.yaml
