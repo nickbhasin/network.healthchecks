@@ -1,0 +1,14 @@
+---
+- name: Ping targets from IOS-XR device
+  cisco.iosxr.iosxr_ping:
+    dest: "{{ item }}"
+    count: 3
+  register: ping_result
+  loop: "{{ ip_targets }}"
+  ignore_errors: true
+
+- name: Collect unreachable IPs (IOS-XR)
+  ansible.builtin.set_fact:
+    unreachable_ips: "{{ unreachable_ips | default([]) + [item] }}"
+  when: ping_result.failed
+  loop: "{{ ip_targets }}"
