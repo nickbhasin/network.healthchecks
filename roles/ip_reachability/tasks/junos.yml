@@ -9,6 +9,6 @@
 
 - name: Collect unreachable IPs (Junos)
   ansible.builtin.set_fact:
-    unreachable_ips: "{{ unreachable_ips | default([]) + [item] }}"
-  when: ping_result.failed
-  loop: "{{ ip_targets }}"
+    unreachable_ips: "{{ unreachable_ips | default([]) + [item.item] }}"
+  when: item.failed
+  loop: "{{ ping_result.results }}"

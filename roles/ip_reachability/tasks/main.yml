@@ -1,3 +1,16 @@
 ---
+- name: Include validation tasks (ensure platform is supported)
+  ansible.builtin.include_tasks: validation.yml
+
 - name: Include platform-specific ping task
-  ansible.builtin.include_tasks: "{{ ansible_network_os }}.yml"
+  ansible.builtin.include_tasks: "{{ ansible_network_os.split('.')[2] }}.yml"
+
+- name: Set output for reachability result
+  ansible.builtin.set_fact:
+    ping_results:
+      unreachable: "{{ unreachable_ips | default([]) }}"
+      reachable: "{{ reachable_ips | default([]) }}"
+
+- name: Debug ping results
+  ansible.builtin.debug:
+    var: ping_results

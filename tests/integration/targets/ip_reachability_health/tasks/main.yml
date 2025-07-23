@@ -1,0 +1,20 @@
+---
+- name: Start IP Reachability integration tests
+  ansible.builtin.debug:
+    msg: "Running IP Reachability checks on {{ inventory_hostname }}"
+
+- name: Run ip_reachability role
+  include_role:
+    name: network.healthchecks.ip_reachability
+  vars:
+    ip_targets:
+      - 8.8.8.8
+      - 1.1.1.1
+    count: 2
+  register: reachability_result
+
+- name: Check unreachable IPs
+  ansible.builtin.assert:
+    that:
+      - (reachability_result.ping_results | default([])) | length == 0
+    fail_msg: "Some IPs were unreachable: {{ reachability_result.ping_results | join(', ') }}"
