@@ -1,19 +1,20 @@
 # network.healthchecks.ip_reachability
 
 ## Overview
-The `network.healthchecks.ip_reachability` role allows monitoring of IP reachability from network devices. This helps detect connectivity issues and ensures network paths are functioning properly. The role provides a comprehensive health check view that shows the status of IP reachability tests and overall network connectivity health.
+The `network.healthchecks.ip_reachability` role validates network connectivity by pinging specified IP targets from a network device. It is designed to verify reachability to critical endpoints and provide a detailed status report for observability and automated diagnostics. This role is useful for detecting broken paths, confirming upstream availability, and ensuring network performance continuity.
 
 ## Features
-- Monitor IP reachability with configurable targets
-- Test connectivity to multiple IP addresses
-- Generate alerts for unreachable destinations
-- Configurable ping count and timeout settings
+- Perform IP reachability checks from devices using native ping modules
+- Supports platform-specific execution (IOS, NX-OS, IOS-XR, Junos)
+-	Differentiates between reachable and unreachable IP targets
+-	Outputs structured health check data for integration with automation systems
+- Easily configurable list of IP targets and ping count
 
 ## Variables
 | Variable Name   | Default Value | Required | Type  | Description                                      |
 |----------------|--------------|----------|-------|--------------------------------------------------|
 | `ip_targets` | []     | yes       | list   | List of IP addresses to ping from the device. |
-| `count` | 2     | no       | int   | Number of ping packets to send (default: 2). |
+| `count` | 2     | no       | int   | Number of ping packets to send. |
 
 ## Usage
 
@@ -26,8 +27,7 @@ The `network.healthchecks.ip_reachability` role allows monitoring of IP reachabi
     ip_targets:
       - 8.8.8.8
       - 1.1.1.1
-      - 208.67.222.222
-    count: 3
+    count: 2
   register: reachability_result
 
 - name: Display IP reachability health check results
