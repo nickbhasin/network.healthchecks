@@ -68,6 +68,7 @@ The `network.healthchecks.ip_reachability` role validates network connectivity b
 - Cisco NX-OS
 - Juniper Junos
 - Cisco IOS-XR
+- Arista EOS
 
 ## License
 
