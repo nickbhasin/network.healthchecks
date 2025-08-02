@@ -4,7 +4,7 @@
     msg: "Running IP Reachability checks on {{ inventory_hostname }}"
 
 - name: Run ip_reachability role
-  include_role:
+  ansible.builtin.include_role:
     name: network.healthchecks.ip_reachability
   vars:
     ip_targets:
@@ -16,5 +16,17 @@
 - name: Check unreachable IPs
   ansible.builtin.assert:
     that:
-      - (reachability_result.ping_results | default([])) | length == 0
-    fail_msg: "Some IPs were unreachable: {{ reachability_result.ping_results | join(', ') }}"
+      - reachability_result.ip_reachability.unreachable_targets | length == 0
+    fail_msg: "Some IPs were unreachable: {{ reachability_result.ip_reachability.unreachable_targets | join(', ') }}"
+
+- name: Check reachability status
+  ansible.builtin.assert:
+    that:
+      - reachability_result.ip_reachability.status == "PASS"
+    fail_msg: "Reachability check failed with status: {{ reachability_result.ip_reachability.status }}"
+
+- name: Check overall result
+  ansible.builtin.assert:
+    that:
+      - reachability_result == "PASS"
+    fail_msg: "Overall result check failed with status: {{ reachability_result.result }}"

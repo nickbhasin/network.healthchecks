@@ -10,6 +10,19 @@
     ping_results:
       unreachable: "{{ unreachable_ips | default([]) }}"
       reachable: "{{ reachable_ips | default([]) }}"
+      total_targets: "{{ ip_targets | length }}"
+      reachable_count: "{{ reachable_ips | default([]) | length }}"
+      status: "{{ 'PASS' if (unreachable_ips | default([]) | length) == 0 else 'FAIL' }}"
+
+- name: Set role return value
+  ansible.builtin.set_fact:
+    ip_reachability:
+      status: "{{ ping_results.status }}"
+      reachable_targets: "{{ ping_results.reachable }}"
+      unreachable_targets: "{{ ping_results.unreachable }}"
+      total_targets: "{{ ping_results.total_targets }}"
+      reachable_count: "{{ ping_results.reachable_count }}"
+    result: "{{ ping_results.status }}"
 
 - name: Debug ping results
   ansible.builtin.debug:
