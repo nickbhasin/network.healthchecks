@@ -18,15 +18,32 @@ The `network.healthchecks.ip_reachability` role validates network connectivity b
 
 ## Usage
 
-### Example: Monitoring IP Reachability
+### Example: Monitoring IP Reachability (All Targets Reachable)
 ```yaml
 - name: Run IP reachability test
   ansible.builtin.include_role:
     name: network.healthchecks.ip_reachability
   vars:
     ip_targets:
-      - 8.8.8.8
-      - 1.1.1.1
+      - 192.0.2.1
+      - 198.51.100.1
+    count: 2
+  register: reachability_result
+
+- name: Display IP reachability health check results
+  ansible.builtin.debug:
+    var: reachability_result.health_checks
+```
+
+### Example: IP Reachability with Unreachable Target
+```yaml
+- name: Run IP reachability test with unreachable target
+  ansible.builtin.include_role:
+    name: network.healthchecks.ip_reachability
+  vars:
+    ip_targets:
+      - 192.0.2.1
+      - 203.0.113.1
     count: 2
   register: reachability_result
 
@@ -36,17 +53,35 @@ The `network.healthchecks.ip_reachability` role validates network connectivity b
 ```
 
 ### Output: IP Reachability Health Check Status
+
+#### PASS Status Example (All Targets Reachable)
 ```json
 {
     "health_checks": {
         "ip_reachability": {
             "status": "PASS",
-            "reachable_targets": ["8.8.8.8", "1.1.1.1"],
+            "reachable_targets": ["192.0.2.1", "198.51.100.1"],
             "unreachable_targets": [],
             "total_targets": 2,
             "reachable_count": 2
         },
         "result": "PASS"
+    }
+}
+```
+
+#### FAIL Status Example (One Target Unreachable)
+```json
+{
+    "health_checks": {
+        "ip_reachability": {
+            "status": "FAIL",
+            "reachable_targets": ["192.0.2.1"],
+            "unreachable_targets": ["203.0.113.1"],
+            "total_targets": 2,
+            "reachable_count": 1
+        },
+        "result": "FAIL"
     }
 }
 ```

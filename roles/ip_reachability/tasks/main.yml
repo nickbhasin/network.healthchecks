@@ -24,6 +24,7 @@
       reachable_count: "{{ ping_results.reachable_count }}"
     result: "{{ ping_results.status }}"
 
-- name: Debug ping results
+- name: IP reachability health check
   ansible.builtin.debug:
-    var: ping_results
+    var: ip_reachability
+  failed_when: "'FAIL' == ip_reachability.status"
