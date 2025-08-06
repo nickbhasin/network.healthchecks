@@ -1,4 +1,9 @@
 ---
+- name: Reset IP lists for fresh execution
+  ansible.builtin.set_fact:
+    unreachable_ips: []
+    reachable_ips: []
+
 - name: Ping targets from IOS device
   cisco.ios.ios_ping:
     dest: "{{ item }}"
@@ -9,12 +14,12 @@
 
 - name: Collect unreachable IPs (IOS)
   ansible.builtin.set_fact:
-    unreachable_ips: "{{ unreachable_ips | default([]) + [item.item] }}"
+    unreachable_ips: "{{ unreachable_ips + [item.item] }}"
   when: item.failed
   loop: "{{ ping_result.results }}"
 
 - name: Collect reachable IPs (IOS)
   ansible.builtin.set_fact:
-    reachable_ips: "{{ reachable_ips | default([]) + [item.item] }}"
+    reachable_ips: "{{ reachable_ips + [item.item] }}"
   when: not item.failed
   loop: "{{ ping_result.results }}"

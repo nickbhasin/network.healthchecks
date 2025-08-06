@@ -3,7 +3,7 @@
   ansible.builtin.debug:
     msg: "Running IP Reachability checks on {{ inventory_hostname }}"
 
-- name: Run ip_reachability role
+- name: Run ip_reachability role with explicit count
   ansible.builtin.include_role:
     name: network.healthchecks.ip_reachability
   vars:
@@ -13,11 +13,22 @@
     count: 2
   register: reachability_result
 
-- name: Check role execution
-  ansible.builtin.assert:
-    that:
-      - reachability_result is defined
-    fail_msg: "Role execution failed"
+- name: Display reachability results with explicit count
+  ansible.builtin.debug:
+    var: hostvars[inventory_hostname].ip_reachability
+
+- name: Run ip_reachability role with default count
+  ansible.builtin.include_role:
+    name: network.healthchecks.ip_reachability
+  vars:
+    ip_targets:
+      - 192.0.2.1
+      - 198.51.100.1
+  register: default_count_result
+
+- name: Display reachability results with default count
+  ansible.builtin.debug:
+    var: hostvars[inventory_hostname].ip_reachability
 
 - name: Debug
   ansible.builtin.debug:

@@ -1,14 +1,25 @@
 ---
+- name: Reset IP lists for fresh execution
+  ansible.builtin.set_fact:
+    unreachable_ips: []
+    reachable_ips: []
+
 - name: Ping targets from IOS-XR device
   cisco.iosxr.iosxr_ping:
     dest: "{{ item }}"
-    count: 3
+    count: "{{ count | default(2) }}"
   register: ping_result
   loop: "{{ ip_targets }}"
   ignore_errors: true
 
 - name: Collect unreachable IPs (IOS-XR)
   ansible.builtin.set_fact:
-    unreachable_ips: "{{ unreachable_ips | default([]) + [item.item] }}"
+    unreachable_ips: "{{ unreachable_ips + [item.item] }}"
   when: item.failed
+  loop: "{{ ping_result.results }}"
+
+- name: Collect reachable IPs (IOS-XR)
+  ansible.builtin.set_fact:
+    reachable_ips: "{{ reachable_ips + [item.item] }}"
+  when: not item.failed
   loop: "{{ ping_result.results }}"
