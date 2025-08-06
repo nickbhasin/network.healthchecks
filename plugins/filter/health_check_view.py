@@ -386,7 +386,7 @@ def health_check_view(*args, **kwargs):
                 n_dict = {}
                 n_dict.update(stats)
                 if vars.get('details'):
-                    details['neighbors'] = health_facts['neighbors']
+                    details['neighbors'] = health_facts.get('neighbors', [])
                     n_dict['details'] = details
                 health_checks[data['summary'].get('name')] = n_dict
 
@@ -394,7 +394,7 @@ def health_check_view(*args, **kwargs):
                 n_dict = {}
                 n_dict.update(stats)
                 if vars.get('details'):
-                    details['neighbors'] = health_facts['neighbors']
+                    details['neighbors'] = health_facts.get('neighbors', [])
                     n_dict['details'] = details
                 n_dict['status'] = 'PASS' if stats['total'] == stats['up'] else 'FAIL'
                 if n_dict['status'] == 'FAIL' and not data['all_up'].get('ignore_errors'):
@@ -406,7 +406,7 @@ def health_check_view(*args, **kwargs):
                 details = {}
                 n_dict.update(stats)
                 if vars.get('details'):
-                    details['neighbors'] = health_facts['neighbors']
+                    details['neighbors'] = health_facts.get('neighbors', [])
                     n_dict['details'] = details
                 n_dict['status'] = 'PASS' if stats['total'] == stats['down'] else 'FAIL'
                 if n_dict['status'] == 'FAIL' and not data['all_down'].get('ignore_errors'):
@@ -418,7 +418,7 @@ def health_check_view(*args, **kwargs):
                 details = {}
                 n_dict.update(stats)
                 if vars.get('details'):
-                    details['neighbors'] = health_facts['neighbors']
+                    details['neighbors'] = health_facts.get('neighbors', [])
                     n_dict['details'] = details
                 n_dict['status'] = 'PASS' if data['min_up']['min_count'] <= stats['up'] else 'FAIL'
                 if n_dict['status'] == 'FAIL' and not data['min_up'].get('ignore_errors'):

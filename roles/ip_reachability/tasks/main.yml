@@ -1,0 +1,30 @@
+---
+- name: Include validation tasks (ensure platform is supported)
+  ansible.builtin.include_tasks: validation.yml
+
+- name: Include platform-specific ping task
+  ansible.builtin.include_tasks: "{{ ansible_network_os.split('.')[2] }}.yml"
+
+- name: Set output for reachability result
+  ansible.builtin.set_fact:
+    ping_results:
+      unreachable: "{{ unreachable_ips | default([]) }}"
+      reachable: "{{ reachable_ips | default([]) }}"
+      total_targets: "{{ ip_targets | length }}"
+      reachable_count: "{{ reachable_ips | default([]) | length }}"
+      status: "{{ 'PASS' if (unreachable_ips | default([]) | length) == 0 else 'FAIL' }}"
+
+- name: Set role return value
+  ansible.builtin.set_fact:
+    ip_reachability:
+      status: "{{ ping_results.status }}"
+      reachable_targets: "{{ ping_results.reachable }}"
+      unreachable_targets: "{{ ping_results.unreachable }}"
+      total_targets: "{{ ping_results.total_targets }}"
+      reachable_count: "{{ ping_results.reachable_count }}"
+    result: "{{ ping_results.status }}"
+
+- name: IP reachability health check
+  ansible.builtin.debug:
+    var: ip_reachability
+  failed_when: "'FAIL' == ip_reachability.status"
