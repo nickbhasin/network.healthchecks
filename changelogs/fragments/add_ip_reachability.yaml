@@ -1,3 +1,0 @@
----
-minor_changes:
-  - Add a new role to check IP reachability and ensure proper tests for the same.

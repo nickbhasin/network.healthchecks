@@ -28,3 +28,10 @@ releases:
           name: ospf_health_check_view
           namespace: null
     release_date: '2025-07-03'
+  2.0.0:
+    changes:
+      minor_changes:
+        - Add a new role to check IP reachability and ensure proper tests for the same.
+    fragments:
+      - add_ip_reachability.yaml
+    release_date: '2025-08-19'
