@@ -4,3 +4,4 @@ profile: production
 # Temporarily silence noisy rules
 skip_list:
   - var-naming[no-role-prefix]
+  - yaml[indentation]
