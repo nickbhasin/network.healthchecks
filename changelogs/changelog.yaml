@@ -34,4 +34,4 @@ releases:
         - Add a new role to check IP reachability and ensure proper tests for the same.
     fragments:
       - add_ip_reachability.yaml
-    release_date: '2025-08-19'
+    release_date: '2025-08-26'
