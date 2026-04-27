@@ -1,5 +1,5 @@
 ---
-- name: Parse CPU health check output for EO
+- name: Parse CPU health check output for EOS
   ansible.utils.cli_parse:
     command: "show processes top once"
     parser:
