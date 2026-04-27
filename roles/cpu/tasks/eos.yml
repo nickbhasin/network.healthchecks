@@ -1,7 +1,7 @@
 ---
-- name: Parse CPU health check output for EOS
+- name: Parse CPU health check output for EO
   ansible.utils.cli_parse:
-    command: "show processes cpu"
+    command: "show processes top once"
     parser:
       name: ansible.netcommon.native
     set_fact: cpu_health

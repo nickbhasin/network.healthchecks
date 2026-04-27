@@ -1,7 +1,7 @@
 ---
 - name: Parse Memory summary output for EOS
   ansible.utils.cli_parse:
-    command: "show memory summary"
+    command: "show system resources"
     parser:
       name: ansible.netcommon.native
     set_fact: memory_health
