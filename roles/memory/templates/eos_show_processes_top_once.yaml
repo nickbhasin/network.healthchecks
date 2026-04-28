@@ -1,0 +1,17 @@
+---
+# fmt: off
+[
+  {
+    "name": "eos_memory_usage",
+    "getval": "KiB Mem:\\s+(?P<total>\\d+)\\s+total,\\s+(?P<used>\\d+)\\s+used,\\s+(?P<free>\\d+)\\s+free,\\s+(?P<buffers>\\d+)\\s+buffers",
+    "result": {
+      "processor_memory": {
+        "total_memory": "{{ (total | int) * 1024 }}",
+        "used_memory": "{{ (used | int) * 1024 }}",
+        "free_memory": "{{ (free | int) * 1024 }}",
+        "buffer_memory": "{{ (buffers | int) * 1024 }}"
+      }
+    }
+  }
+]
+# fmt: on

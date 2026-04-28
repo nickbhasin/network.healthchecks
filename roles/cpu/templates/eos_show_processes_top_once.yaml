@@ -1,0 +1,16 @@
+# fmt: off
+[
+  {
+    "name": "cpu_utilization",
+    "getval": "(?m)^%Cpu\\(s\\):\\s*(?P<user>[0-9.]+)\\s*us,\\s*(?P<system>[0-9.]+)\\s*sy,\\s*(?P<nice>[0-9.]+)\\s*ni,\\s*(?P<idle>[0-9.]+)\\s*id",
+    "result": {
+      "cpu_utilization": {
+        "user_percent": "{{ user | float }}",
+        "system_percent": "{{ system | float }}",
+        "idle_percent": "{{ idle | float }}",
+        "total_utilization": "{{ 100.0 - (idle | float) }}"
+      }
+    }
+  }
+]
+# fmt: on
