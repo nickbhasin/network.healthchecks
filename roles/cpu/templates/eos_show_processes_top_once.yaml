@@ -1,0 +1,24 @@
+# fmt: off
+[
+  {
+    "name": "eos_cpu_top_pct",
+    "getval": "(?m)^%Cpu\\(s\\):\\s+[\\d.]+\\s+us,\\s+[\\d.]+\\s+sy,\\s+[\\d.]+\\s+ni,\\s+(?P<idle>[\\d.]+)\\s+id",
+    "result": {
+      "global": {
+        "five_minute": "{{ (100 - (idle | float)) | round | int }}",
+        "one_minute": "{{ (100 - (idle | float)) | round | int }}"
+      }
+    }
+  },
+  {
+    "name": "eos_cpu_top_pct_legacy",
+    "getval": "(?m)^Cpu\\(s\\):\\s+[\\d.]+%?us,\\s+[\\d.]+%?sy,\\s+[\\d.]+%?ni,\\s+(?P<idle>[\\d.]+)%?id",
+    "result": {
+      "global": {
+        "five_minute": "{{ (100 - (idle | float)) | round | int }}",
+        "one_minute": "{{ (100 - (idle | float)) | round | int }}"
+      }
+    }
+  }
+]
+# fmt: on

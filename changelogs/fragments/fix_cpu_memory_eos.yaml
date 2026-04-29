@@ -1,0 +1,3 @@
+---
+bug_fixes:
+  - Fix CPU and Memory Health check for arista eos.
