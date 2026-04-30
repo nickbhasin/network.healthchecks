@@ -1,19 +1,11 @@
 ---
 - name: Parse Memory output for EOS
   ansible.utils.cli_parse:
-    command: "show version"
+    command: "show processes top once"
     parser:
       name: ansible.netcommon.native
-      template_path: eos_show_version.yaml
+      template_path: eos_show_processes_top_once.yaml
     set_fact: memory_health
-
-- name: Apply EOS memory buffer/cache floors from role variables
-  ansible.builtin.set_fact:
-    memory_health:
-      memory_health: "{{ memory_health['memory_health'] | combine({
-          'buffers_mb': lookup('vars', 'min_buffers', default=50) | int,
-          'cache_mb': lookup('vars', 'min_cache', default=50) | int
-        }) }}"
 
 - name: Debug memory health (EOS)
   ansible.builtin.debug:

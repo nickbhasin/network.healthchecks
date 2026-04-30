@@ -1,0 +1,23 @@
+# fmt: off
+[
+  {
+    "name": "eos_top_mem_kib",
+    "getval": "^(?:KiB\\s+)?Mem:\\s+(?P<total_kib>\\d+)\\s+total,\\s+(?P<used_kib>\\d+)\\s+used,\\s+(?P<free_kib>\\d+)\\s+free,\\s+(?P<buffers_kib>\\d+)\\s+buffers",
+    "shared": true,
+    "result": {}
+  },
+  {
+    "name": "eos_top_cached_kib",
+    "getval": "^(?:KiB\\s+)?Swap:\\s+\\d+\\s+total,\\s+\\d+\\s+used,\\s+\\d+\\s+free,\\s+(?P<cached_kib>\\d+)\\s+cached",
+    "result": {
+      "memory_health": {
+        "total_mb": "{{ ((total_kib | int) / 1024) | round(2) }}",
+        "used_mb": "{{ ((used_kib | int) / 1024) | round(2) }}",
+        "free_mb": "{{ ((free_kib | int) / 1024) | round(2) }}",
+        "buffers_mb": "{{ ((buffers_kib | int) / 1024) | round(2) }}",
+        "cache_mb": "{{ ((cached_kib | int) / 1024) | round(2) }}"
+      }
+    }
+  }
+]
+# fmt: on
